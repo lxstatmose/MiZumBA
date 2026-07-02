@@ -79,17 +79,24 @@ def test_audio_transcribe_api_with_fake_whisper_model(client: TestClient, monkey
 
 
 def test_audio_transcribe_returns_503_when_whisper_is_disabled(client: TestClient) -> None:
-    auth = register_user(client, email="audio-disabled@example.com", display_name="Audio Disabled")
+    settings = get_settings()
+    original_value = settings.enable_whisper_transcription
+    settings.enable_whisper_transcription = False
 
-    response = client.post(
-        "/api/v1/audio/transcribe",
-        headers=auth_headers(auth),
-        files={"upload": ("voice.webm", b"audio", "audio/webm")},
-        data={"language": "en"},
-    )
+    try:
+        auth = register_user(client, email="audio-disabled@example.com", display_name="Audio Disabled")
 
-    assert response.status_code == 503
-    assert "disabled" in response.json()["detail"].lower()
+        response = client.post(
+            "/api/v1/audio/transcribe",
+            headers=auth_headers(auth),
+            files={"upload": ("voice.webm", b"audio", "audio/webm")},
+            data={"language": "en"},
+        )
+
+        assert response.status_code == 503
+        assert "disabled" in response.json()["detail"].lower()
+    finally:
+        settings.enable_whisper_transcription = original_value
 
 
 def test_voice_message_upload_and_send(client: TestClient) -> None:
