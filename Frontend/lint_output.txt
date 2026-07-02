@@ -1,0 +1,349 @@
+
+> mazumba@0.0.0 lint
+> eslint .
+
+
+/Users/atmose/Downloads/MiZumBA/Frontend/src/components/CreateChatModal.tsx
+  46:55  error  Error: Calling setState synchronously within an effect can trigger cascading renders
+
+Effects are intended to synchronize state between React and external systems such as manually updating the DOM, state management libraries, or other platform APIs. In general, the body of an effect should do one or both of the following:
+* Update external systems with the latest state from React.
+* Subscribe for updates from some external system, calling setState in a callback function when external state changes.
+
+Calling setState synchronously within an effect body causes cascading renders that can hurt performance, and is not recommended. (https://react.dev/learn/you-might-not-need-an-effect).
+
+/Users/atmose/Downloads/MiZumBA/Frontend/src/components/CreateChatModal.tsx:46:55
+  44 |
+  45 |   useEffect(() => {
+> 46 |     if (mode !== 'group' || memberQuery.length < 2) { setSearchResults([]); return }
+     |                                                       ^^^^^^^^^^^^^^^^ Avoid calling setState() directly within an effect
+  47 |     if (searchTimer.current) clearTimeout(searchTimer.current)
+  48 |     searchTimer.current = setTimeout(async () => {
+  49 |       setSearching(true)          react-hooks/set-state-in-effect
+  63:56  error  Error: Calling setState synchronously within an effect can trigger cascading renders
+
+Effects are intended to synchronize state between React and external systems such as manually updating the DOM, state management libraries, or other platform APIs. In general, the body of an effect should do one or both of the following:
+* Update external systems with the latest state from React.
+* Subscribe for updates from some external system, calling setState in a callback function when external state changes.
+
+Calling setState synchronously within an effect body causes cascading renders that can hurt performance, and is not recommended. (https://react.dev/learn/you-might-not-need-an-effect).
+
+/Users/atmose/Downloads/MiZumBA/Frontend/src/components/CreateChatModal.tsx:63:56
+  61 |
+  62 |   useEffect(() => {
+> 63 |     if (mode !== 'direct' || directQuery.length < 2) { setDirectResults([]); return }
+     |                                                        ^^^^^^^^^^^^^^^^ Avoid calling setState() directly within an effect
+  64 |     if (directTimer.current) clearTimeout(directTimer.current)
+  65 |     directTimer.current = setTimeout(async () => {
+  66 |       setDirectSearching(true)  react-hooks/set-state-in-effect
+
+/Users/atmose/Downloads/MiZumBA/Frontend/src/components/GroupInfoPanel.tsx
+  49:21  error  Error: Calling setState synchronously within an effect can trigger cascading renders
+
+Effects are intended to synchronize state between React and external systems such as manually updating the DOM, state management libraries, or other platform APIs. In general, the body of an effect should do one or both of the following:
+* Update external systems with the latest state from React.
+* Subscribe for updates from some external system, calling setState in a callback function when external state changes.
+
+Calling setState synchronously within an effect body causes cascading renders that can hurt performance, and is not recommended. (https://react.dev/learn/you-might-not-need-an-effect).
+
+/Users/atmose/Downloads/MiZumBA/Frontend/src/components/GroupInfoPanel.tsx:49:21
+  47 |   }, [chatId])
+  48 |
+> 49 |   useEffect(() => { reload() }, [reload])
+     |                     ^^^^^^ Avoid calling setState() directly within an effect
+  50 |
+  51 |   useEffect(() => {
+  52 |     if (addSearch.length < 2) { setAddResults([]); return }                                                                    react-hooks/set-state-in-effect
+  52:33  error  Error: Calling setState synchronously within an effect can trigger cascading renders
+
+Effects are intended to synchronize state between React and external systems such as manually updating the DOM, state management libraries, or other platform APIs. In general, the body of an effect should do one or both of the following:
+* Update external systems with the latest state from React.
+* Subscribe for updates from some external system, calling setState in a callback function when external state changes.
+
+Calling setState synchronously within an effect body causes cascading renders that can hurt performance, and is not recommended. (https://react.dev/learn/you-might-not-need-an-effect).
+
+/Users/atmose/Downloads/MiZumBA/Frontend/src/components/GroupInfoPanel.tsx:52:33
+  50 |
+  51 |   useEffect(() => {
+> 52 |     if (addSearch.length < 2) { setAddResults([]); return }
+     |                                 ^^^^^^^^^^^^^ Avoid calling setState() directly within an effect
+  53 |     const timer = setTimeout(async () => {
+  54 |       try {
+  55 |         const res = await searchUsers(addSearch)  react-hooks/set-state-in-effect
+
+/Users/atmose/Downloads/MiZumBA/Frontend/src/pages/ActivityPage.tsx
+  103:21  error  Error: Calling setState synchronously within an effect can trigger cascading renders
+
+Effects are intended to synchronize state between React and external systems such as manually updating the DOM, state management libraries, or other platform APIs. In general, the body of an effect should do one or both of the following:
+* Update external systems with the latest state from React.
+* Subscribe for updates from some external system, calling setState in a callback function when external state changes.
+
+Calling setState synchronously within an effect body causes cascading renders that can hurt performance, and is not recommended. (https://react.dev/learn/you-might-not-need-an-effect).
+
+/Users/atmose/Downloads/MiZumBA/Frontend/src/pages/ActivityPage.tsx:103:21
+  101 |   }, [setUnreadNotifications])
+  102 |
+> 103 |   useEffect(() => { load() }, [load])
+      |                     ^^^^ Avoid calling setState() directly within an effect
+  104 |
+  105 |   useEffect(() => {
+  106 |     const off = socket.on((ev) => {                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               react-hooks/set-state-in-effect
+  194:10  error  Error: Cannot create components during render
+
+Components created during render will reset their state each time they are created. Declare components outside of render.
+
+/Users/atmose/Downloads/MiZumBA/Frontend/src/pages/ActivityPage.tsx:194:10
+  192 |           </div>
+  193 |         )}
+> 194 |         <Group label={t.today} items={today} />
+      |          ^^^^^ This component is created during render
+  195 |         <Group label={t.yesterday} items={yesterday} />
+  196 |         <Group label={t.earlier} items={earlier} />
+  197 |         </div>
+
+/Users/atmose/Downloads/MiZumBA/Frontend/src/pages/ActivityPage.tsx:146:17
+  144 |   const { today, yesterday, earlier } = groupByDate(notifications)
+  145 |
+> 146 |   const Group = ({ label, items }: { label: string; items: NotificationPublic[] }) => items.length === 0 ? null : (
+      |                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 147 |     <div>
+      | ^^^^^^^^^
+> 148 |       <div className="section-label" style={{ padding: '0.75rem 1rem 0.25rem' }}>{label}</div>
+      | ^^^^^^^^^
+> 149 |       {items.map((n) => <NotifItem key={n.id} item={n} onDelete={handleDelete} onRead={handleRead} onNavigate={handleNavigate} t={t} />)}
+      | ^^^^^^^^^
+> 150 |     </div>
+      | ^^^^^^^^^
+> 151 |   )
+      | ^^^^ The component is created during render here
+  152 |
+  153 |   return (
+  154 |     <div style={{ display: 'flex', flexDirection: 'column', height: '100%', background: 'var(--bg)', overflow: 'hidden' }}>  react-hooks/static-components
+  195:10  error  Error: Cannot create components during render
+
+Components created during render will reset their state each time they are created. Declare components outside of render.
+
+/Users/atmose/Downloads/MiZumBA/Frontend/src/pages/ActivityPage.tsx:195:10
+  193 |         )}
+  194 |         <Group label={t.today} items={today} />
+> 195 |         <Group label={t.yesterday} items={yesterday} />
+      |          ^^^^^ This component is created during render
+  196 |         <Group label={t.earlier} items={earlier} />
+  197 |         </div>
+  198 |       </div>
+
+/Users/atmose/Downloads/MiZumBA/Frontend/src/pages/ActivityPage.tsx:146:17
+  144 |   const { today, yesterday, earlier } = groupByDate(notifications)
+  145 |
+> 146 |   const Group = ({ label, items }: { label: string; items: NotificationPublic[] }) => items.length === 0 ? null : (
+      |                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 147 |     <div>
+      | ^^^^^^^^^
+> 148 |       <div className="section-label" style={{ padding: '0.75rem 1rem 0.25rem' }}>{label}</div>
+      | ^^^^^^^^^
+> 149 |       {items.map((n) => <NotifItem key={n.id} item={n} onDelete={handleDelete} onRead={handleRead} onNavigate={handleNavigate} t={t} />)}
+      | ^^^^^^^^^
+> 150 |     </div>
+      | ^^^^^^^^^
+> 151 |   )
+      | ^^^^ The component is created during render here
+  152 |
+  153 |   return (
+  154 |     <div style={{ display: 'flex', flexDirection: 'column', height: '100%', background: 'var(--bg)', overflow: 'hidden' }}>      react-hooks/static-components
+  196:10  error  Error: Cannot create components during render
+
+Components created during render will reset their state each time they are created. Declare components outside of render.
+
+/Users/atmose/Downloads/MiZumBA/Frontend/src/pages/ActivityPage.tsx:196:10
+  194 |         <Group label={t.today} items={today} />
+  195 |         <Group label={t.yesterday} items={yesterday} />
+> 196 |         <Group label={t.earlier} items={earlier} />
+      |          ^^^^^ This component is created during render
+  197 |         </div>
+  198 |       </div>
+  199 |     </div>
+
+/Users/atmose/Downloads/MiZumBA/Frontend/src/pages/ActivityPage.tsx:146:17
+  144 |   const { today, yesterday, earlier } = groupByDate(notifications)
+  145 |
+> 146 |   const Group = ({ label, items }: { label: string; items: NotificationPublic[] }) => items.length === 0 ? null : (
+      |                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 147 |     <div>
+      | ^^^^^^^^^
+> 148 |       <div className="section-label" style={{ padding: '0.75rem 1rem 0.25rem' }}>{label}</div>
+      | ^^^^^^^^^
+> 149 |       {items.map((n) => <NotifItem key={n.id} item={n} onDelete={handleDelete} onRead={handleRead} onNavigate={handleNavigate} t={t} />)}
+      | ^^^^^^^^^
+> 150 |     </div>
+      | ^^^^^^^^^
+> 151 |   )
+      | ^^^^ The component is created during render here
+  152 |
+  153 |   return (
+  154 |     <div style={{ display: 'flex', flexDirection: 'column', height: '100%', background: 'var(--bg)', overflow: 'hidden' }}>      react-hooks/static-components
+
+/Users/atmose/Downloads/MiZumBA/Frontend/src/pages/ChannelsPage.tsx
+   57:5   error  Error: Calling setState synchronously within an effect can trigger cascading renders
+
+Effects are intended to synchronize state between React and external systems such as manually updating the DOM, state management libraries, or other platform APIs. In general, the body of an effect should do one or both of the following:
+* Update external systems with the latest state from React.
+* Subscribe for updates from some external system, calling setState in a callback function when external state changes.
+
+Calling setState synchronously within an effect body causes cascading renders that can hurt performance, and is not recommended. (https://react.dev/learn/you-might-not-need-an-effect).
+
+/Users/atmose/Downloads/MiZumBA/Frontend/src/pages/ChannelsPage.tsx:57:5
+  55 |
+  56 |   useEffect(() => {
+> 57 |     setLoading(true)
+     |     ^^^^^^^^^^ Avoid calling setState() directly within an effect
+  58 |     setPosts([])
+  59 |     getChannelPosts(channel.id)
+  60 |       .then(setPosts)                                                                                                    react-hooks/set-state-in-effect
+  315:21  error  Error: Calling setState synchronously within an effect can trigger cascading renders
+
+Effects are intended to synchronize state between React and external systems such as manually updating the DOM, state management libraries, or other platform APIs. In general, the body of an effect should do one or both of the following:
+* Update external systems with the latest state from React.
+* Subscribe for updates from some external system, calling setState in a callback function when external state changes.
+
+Calling setState synchronously within an effect body causes cascading renders that can hurt performance, and is not recommended. (https://react.dev/learn/you-might-not-need-an-effect).
+
+/Users/atmose/Downloads/MiZumBA/Frontend/src/pages/ChannelsPage.tsx:315:21
+  313 |   }, [])
+  314 |
+> 315 |   useEffect(() => { load() }, [load, refreshTrigger])
+      |                     ^^^^ Avoid calling setState() directly within an effect
+  316 |   useEffect(() => {
+  317 |     const timeout = setTimeout(() => load(search || undefined), 400)
+  318 |     return () => clearTimeout(timeout)  react-hooks/set-state-in-effect
+
+/Users/atmose/Downloads/MiZumBA/Frontend/src/pages/ChatsPage.tsx
+   413:5   error  Error: Calling setState synchronously within an effect can trigger cascading renders
+
+Effects are intended to synchronize state between React and external systems such as manually updating the DOM, state management libraries, or other platform APIs. In general, the body of an effect should do one or both of the following:
+* Update external systems with the latest state from React.
+* Subscribe for updates from some external system, calling setState in a callback function when external state changes.
+
+Calling setState synchronously within an effect body causes cascading renders that can hurt performance, and is not recommended. (https://react.dev/learn/you-might-not-need-an-effect).
+
+/Users/atmose/Downloads/MiZumBA/Frontend/src/pages/ChatsPage.tsx:413:5
+  411 |   useEffect(() => {
+  412 |     prevChatId.current = chat.id
+> 413 |     setMessage(drafts.get(chat.id) ?? '')
+      |     ^^^^^^^^^^ Avoid calling setState() directly within an effect
+  414 |   }, [chat.id])
+  415 |
+  416 |   useEffect(() => {                                                                                                                                                                                     react-hooks/set-state-in-effect
+   417:5   error  Error: Calling setState synchronously within an effect can trigger cascading renders
+
+Effects are intended to synchronize state between React and external systems such as manually updating the DOM, state management libraries, or other platform APIs. In general, the body of an effect should do one or both of the following:
+* Update external systems with the latest state from React.
+* Subscribe for updates from some external system, calling setState in a callback function when external state changes.
+
+Calling setState synchronously within an effect body causes cascading renders that can hurt performance, and is not recommended. (https://react.dev/learn/you-might-not-need-an-effect).
+
+/Users/atmose/Downloads/MiZumBA/Frontend/src/pages/ChatsPage.tsx:417:5
+  415 |
+  416 |   useEffect(() => {
+> 417 |     setLoading(true)
+      |     ^^^^^^^^^^ Avoid calling setState() directly within an effect
+  418 |     setMessages([])
+  419 |     setMessagesMap(new Map())
+  420 |     setReplyTo(null)                                                                                                                                                                                                        react-hooks/set-state-in-effect
+   769:27  error  Empty block statement                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      no-empty
+   924:21  error  Error: Calling setState synchronously within an effect can trigger cascading renders
+
+Effects are intended to synchronize state between React and external systems such as manually updating the DOM, state management libraries, or other platform APIs. In general, the body of an effect should do one or both of the following:
+* Update external systems with the latest state from React.
+* Subscribe for updates from some external system, calling setState in a callback function when external state changes.
+
+Calling setState synchronously within an effect body causes cascading renders that can hurt performance, and is not recommended. (https://react.dev/learn/you-might-not-need-an-effect).
+
+/Users/atmose/Downloads/MiZumBA/Frontend/src/pages/ChatsPage.tsx:924:21
+  922 |   }, [onChatsLoaded])
+  923 |
+> 924 |   useEffect(() => { load() }, [load])
+      |                     ^^^^ Avoid calling setState() directly within an effect
+  925 |
+  926 |   useEffect(() => {
+  927 |     const off = socket.on((ev) => {                                                                                                                                                                                         react-hooks/set-state-in-effect
+  1050:18  error  Error: Calling setState synchronously within an effect can trigger cascading renders
+
+Effects are intended to synchronize state between React and external systems such as manually updating the DOM, state management libraries, or other platform APIs. In general, the body of an effect should do one or both of the following:
+* Update external systems with the latest state from React.
+* Subscribe for updates from some external system, calling setState in a callback function when external state changes.
+
+Calling setState synchronously within an effect body causes cascading renders that can hurt performance, and is not recommended. (https://react.dev/learn/you-might-not-need-an-effect).
+
+/Users/atmose/Downloads/MiZumBA/Frontend/src/pages/ChatsPage.tsx:1050:18
+  1048 |     if (localChat?.id === openChatId) return
+  1049 |     const found = allChats.find((c) => c.id === openChatId)
+> 1050 |     if (found) { setLocalChat(found); return }
+       |                  ^^^^^^^^^^^^ Avoid calling setState() directly within an effect
+  1051 |     getChatDetail(openChatId).then((d) => setLocalChat(d as ChatSummary)).catch(() => {})
+  1052 |   }, [openChatId, localChat?.id, allChats])
+  1053 |  react-hooks/set-state-in-effect
+
+/Users/atmose/Downloads/MiZumBA/Frontend/src/pages/settings/ChangePasswordPage.tsx
+  79:14  error  Error: Cannot create components during render
+
+Components created during render will reset their state each time they are created. Declare components outside of render.
+
+/Users/atmose/Downloads/MiZumBA/Frontend/src/pages/settings/ChangePasswordPage.tsx:79:14
+  77 |         <div style={{ maxWidth: 480, margin: '0 auto' }}>
+  78 |           <form onSubmit={handleSubmit}>
+> 79 |             <Field label={t.currentPassword} value={current} onChange={setCurrent} show={showCurrent} onToggle={() => setShowCurrent((s) => !s)} />
+     |              ^^^^^ This component is created during render
+  80 |             <Field label={t.newPassword} value={next} onChange={setNext} show={showNext} onToggle={() => setShowNext((s) => !s)} />
+  81 |             <div style={{ marginBottom: '1.5rem' }}>
+  82 |               <label style={{ display: 'block', fontSize: '0.78rem', fontWeight: 600, color: 'var(--text-secondary)', marginBottom: '0.4rem' }}>{t.confirmPassword}</label>
+
+/Users/atmose/Downloads/MiZumBA/Frontend/src/pages/settings/ChangePasswordPage.tsx:40:17
+  38 |   }
+  39 |
+> 40 |   const Field = ({ label, value, onChange, show, onToggle }: {
+     |                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 41 |     label: string; value: string; onChange: (v: string) => void; show: boolean; onToggle: () => void
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 42 |   }) => (
+     …
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 62 |     </div>
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 63 |   )
+     | ^^^^ The component is created during render here
+  64 |
+  65 |   return (
+  66 |     <div style={{ height: '100%', display: 'flex', flexDirection: 'column', background: 'var(--bg)', overflow: 'hidden' }}>  react-hooks/static-components
+  80:14  error  Error: Cannot create components during render
+
+Components created during render will reset their state each time they are created. Declare components outside of render.
+
+/Users/atmose/Downloads/MiZumBA/Frontend/src/pages/settings/ChangePasswordPage.tsx:80:14
+  78 |           <form onSubmit={handleSubmit}>
+  79 |             <Field label={t.currentPassword} value={current} onChange={setCurrent} show={showCurrent} onToggle={() => setShowCurrent((s) => !s)} />
+> 80 |             <Field label={t.newPassword} value={next} onChange={setNext} show={showNext} onToggle={() => setShowNext((s) => !s)} />
+     |              ^^^^^ This component is created during render
+  81 |             <div style={{ marginBottom: '1.5rem' }}>
+  82 |               <label style={{ display: 'block', fontSize: '0.78rem', fontWeight: 600, color: 'var(--text-secondary)', marginBottom: '0.4rem' }}>{t.confirmPassword}</label>
+  83 |               <div style={{ position: 'relative' }}>
+
+/Users/atmose/Downloads/MiZumBA/Frontend/src/pages/settings/ChangePasswordPage.tsx:40:17
+  38 |   }
+  39 |
+> 40 |   const Field = ({ label, value, onChange, show, onToggle }: {
+     |                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 41 |     label: string; value: string; onChange: (v: string) => void; show: boolean; onToggle: () => void
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 42 |   }) => (
+     …
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 62 |     </div>
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 63 |   )
+     | ^^^^ The component is created during render here
+  64 |
+  65 |   return (
+  66 |     <div style={{ height: '100%', display: 'flex', flexDirection: 'column', background: 'var(--bg)', overflow: 'hidden' }}>       react-hooks/static-components
+
+✖ 17 problems (17 errors, 0 warnings)
+
