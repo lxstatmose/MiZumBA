@@ -83,7 +83,6 @@ jobs:
         with:
           node-version: "24"
           cache: "npm"
-          cache-dependency-path: Frontend/package-lock.json
 
       - name: Install dependencies
         working-directory: Frontend
