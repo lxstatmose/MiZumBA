@@ -1,0 +1,41 @@
+[build-system]
+requires = ["setuptools>=75.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[tool.ruff]
+line-length = 120
+target-version = "py312"
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "N", "UP", "B", "SIM", "ARG", "C4", "T20"]
+ignore = ["B008", "UP017", "UP036"]
+
+[tool.ruff.lint.per-file-ignores]
+"__init__.py" = ["F401"]
+"app/core/database.py" = ["F811"]
+"alembic/env.py" = ["F401", "F811"]
+"alembic/versions/*" = ["E501", "W291"]
+"tests/*" = ["E402", "ARG002", "ARG005"]
+"tests/integration/*" = ["E501"]
+"tests/unit/*" = ["ARG002"]
+"scripts/*" = ["T201"]
+
+[tool.ruff.format]
+quote-style = "double"
+indent-style = "space"
+skip-magic-trailing-comma = false
+line-ending = "auto"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = ["test_*.py"]
+python_classes = ["Test*"]
+python_functions = ["test_*"]
+asyncio_mode = "auto"
+
+[tool.coverage.run]
+source = ["app"]
+omit = ["*/tests/*", "*/migrations/*"]
+
+[tool.coverage.report]
+exclude_lines = ["pragma: no cover", "def __repr__", "raise NotImplementedError"]

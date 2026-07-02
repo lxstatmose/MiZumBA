@@ -1,0 +1,47 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.env
+.venv/
+env/
+venv/
+*.egg-info/
+dist/
+build/
+.eggs/
+*.egg
+.Python
+pip-log.txt
+pip-delete-this-directory.txt
+.tox/
+.mypy_cache/
+.ruff_cache/
+.coverage
+coverage/
+htmlcov/
+
+# Backend specific
+Backend/uploads/
+Backend/*.db
+
+# Node / Frontend
+node_modules/
+Frontend/dist/
+Frontend/.vite/
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Docker
+docker-compose.override.yml
+
+# Environment files
+.env.local
+.env.production
